@@ -14,6 +14,12 @@ if [ "$?" -eq "4" ] ; then
     exit 3
 fi
 
+if [ ! -d "$DYNACOE_INSTALL_PATH/userspace/ver" ]; then 
+    echo "No versions of dynacoe are currently installed. Unable to add directory!"
+    echo "(try dynaoce-update to retrieve the latest build!)"
+    exit 4
+fi
+
 
 if [ ! "$2" = "--force" ]; then 
     dynacoe-verify > /dev/null

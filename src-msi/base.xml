@@ -20,8 +20,7 @@
             
     <Media Id='1' Cabinet='base.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
     <Property Id='DiskPrompt' Value="Dynacoe installation source [1]" />
-    
-    
+    <Property Id='ARPRODUCTICON' Value='iconmain.ico' />
 
     
     
@@ -71,6 +70,7 @@
                 <File Id='dynacoe_update_f'         Name='dynacoe-update'       DiskId='1' Source='../assets/dynacoe-update'/>
                 <File Id='dynacoe_build_f'          Name='dynacoe-build'        DiskId='1' Source='../assets/dynacoe-build'/>
                 <File Id='dynacoe_verify_f'         Name='dynacoe-verify'       DiskId='1' Source='../assets/dynacoe-verify'/> 
+                <File Id='dynacoe_remove_f'         Name='dynacoe-remove'       DiskId='1' Source='../assets/dynacoe-remove'/> 
             </Component>
         </Directory>
         
@@ -150,7 +150,7 @@
     <UIRef Id="WixUI_Minimal" />
     <UIRef Id="WixUI_ErrorProgressText" />        
     <WixVariable Id="WixUILicenseRtf" Value="../assets/win/dynacoe-installer.rtf" />
-    <!--<WixVariable Id="WixUIBannerBmp" Value="../assets/banner.bmp" />-->
+    <WixVariable Id="WixUIBannerBmp" Value="../assets/win/banner.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="../assets/win/dialog.bmp" />
     </Product>
 </Wix>

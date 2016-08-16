@@ -7,6 +7,10 @@ Johnathan Corkery, 2016
 project 
 page. Thanks! ***
 
+If you're looking for the actual installers, go here http://coebeef.net/dynacoe
+If you're look
+
+
 The source here is for various installation suites that 
 will equip your system with simple tools designed to 
 simplify building Dynacoe applications. [The Dynacoe project can be found here.](http://github.com/jcorks/Dynacoe/)
@@ -15,24 +19,24 @@ simplify building Dynacoe applications. [The Dynacoe project can be found here.]
 
 
 The tools will:
-    - Provide consistent management and build assets across multiple platorms
-    - Ensure that your environment contains all prereqs for building 
-    - Let you easily keep, maintain, and update any number of pre-build or custom-built versions of 
+- Provide consistent management and build assets across multiple platorms
+- Ensure that your environment contains all prereqs for building 
+- Let you easily keep, maintain, and update any number of pre-build or custom-built versions of 
 the Dynacoe library
-    - Prepare your environment with no additional configuration needed
-    - Organize your Dynacoe assets in a project-oriented way.
+- Prepare your environment with no additional configuration needed
+- Organize your Dynacoe assets in a project-oriented way.
 
     
 
 Supported platforms:
-    - Windows
-    - Debian
+- Windows
+- Debian
     
     
     
 Windows
 -------
-For windows users an MSI is available for Vista and later. The installer, while tiny itself,
+For windows users an, MSI is available for Vista and later. The installer, while tiny itself,
 will install for you [MSYS2](https://msys2.github.io/) to then be able to use all the assets in a uniform 
 way, as many of them were designed to be used in a unix-like envornment.
 

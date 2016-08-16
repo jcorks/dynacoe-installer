@@ -64,7 +64,8 @@ all: $(USER_OBJS)
 # each object file
 %.o: %
 	echo $(USER_OBJS)
-	$(CC) $(OS_FLAGS) $(FLGS) $(LD)  $(INCS) -c $(filter %$(patsubst %.o,%,$@), $(ALL_SRCS)) -o $@
+    @echo Compiling %
+	@$(CC) $(OS_FLAGS) $(FLGS) $(LD)  $(INCS) -c $(filter %$(patsubst %.o,%,$@), $(ALL_SRCS)) -o $@
 
 
 	

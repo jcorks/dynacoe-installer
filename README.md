@@ -3,7 +3,9 @@ Dynacoe: Installers
 
 Johnathan Corkery, 2016
 
-*** For errors with the installers, please post them as tickets here rathe rthan the Dynaoce project page. Thanks! ***
+*** For errors with the installers, please post them as tickets here rather than on the Dynaoce 
+project 
+page. Thanks! ***
 
 The source here is for various installation suites that 
 will equip your system with simple tools designed to 
@@ -13,10 +15,13 @@ simplify building Dynacoe applications. [The Dynacoe project can be found here.]
 
 
 The tools will:
-    - Assure that your environment contains all prereqs for building 
-    - Let you easily keep, maintain, and update any number of builds of the Dynacoe library
+    - Provide consistent management and build assets across multiple platorms
+    - Ensure that your environment contains all prereqs for building 
+    - Let you easily keep, maintain, and update any number of pre-build or custom-built versions of 
+the Dynacoe library
     - Prepare your environment with no additional configuration needed
-    - Help manage built assets in a project-like structure
+    - Organize your Dynacoe assets in a project-oriented way.
+
     
 
 Supported platforms:

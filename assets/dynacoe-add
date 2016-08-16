@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# dynacoe-add: turns a directory into a build directory
+# Johnathan Corkery, 2016
+#
+#
+#
+dynacoe-verify > /dev/null
+if [ "$?" -eq "4" ] ; then 
+    echo "Could not set up build directory: DYNACOE_INSTALL_PATH is missing."
+    echo "Windows users: Sometimes, environment variables do not propogate until after some base"
+    echo "programs are rstarted with these vars in place."
+    echo "If you are on windows and just installed, try resetting your machine."
+    exit 3
+fi
+
+
+if [ ! "$2" = "--force" ]; then 
+    dynacoe-verify > /dev/null
+    if [ "$?" -eq "0" ] ; then 
+        echo "This directory is already a valid Dynacoe directory."
+        exit 2
+    fi
+fi
+
+
+
+
+if [ "$#" -ge "2" ] || [ "$1" = "--help" ] || [ "$#" -lt "1" ]; then 
+    echo "Usage: "
+    echo "\tdynacoe-add [project name] [--force]"
+    echo ""
+    echo "If the directory already exists as a dynacoe directory,"
+    echo "this command will fail."
+    exit 1
+fi
+
+
+mkdir ./.dynacoe
+touch SOURCES #should always leave SOURCES alone always
+cp "$DYNACOE_INSTALL_PATH/makefile"  ./.dynacoe/
+ln -svTf "$DYNACOE_INSTALL_PATH/userspace/ver" userspace-ver > /dev/null
+if [ ! -d ./userspace-ver ]; then 
+    echo "Failed to create userspace link to Dynaoce installation!"
+    exit 4
+fi
+mv ./userspace-ver ./.dynacoe/
+echo "$1" > ./.dynacoe/PROJECT
+echo "default" > ./.dynacoe/MODE
+
+
+
+echo "This directory is now the dynacoe project \"$1\"."
+echo "Enumerate the paths to your source files in the SOURCES file."
+echo "dynacoe-build will then build your project."

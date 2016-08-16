@@ -1,0 +1,108 @@
+#!/bin/sh
+
+# dynacoe-update: pulls the current release version of the dynacoe libraries, offline dependencies, and
+# other things you'd need to build dynacoe on your system
+
+# in install directories, all vdersion so built Dynaoce are within the root directory 
+# "ver". If "ver" does not exist upon first updating, the first successfully
+# retrieved built library path will be used as the [default] config version
+# This is done by creating a DEFAULT file in the base DYNACOE_INSTALL_PATH directory 
+# that contains the version string
+
+# directory pathing for release versions:
+# DYNACOE_INSTALL_PATH/ver/[version]/[contents of Dynacoe.tar.xz]
+
+offline=""
+if [ "$1" = "--offline" ]; then 
+    offline="y" 
+    if [ ! -f "$2" ]; then 
+        echo "Could not find offline archive $2!!"
+        exit 4
+    fi
+fi
+
+dynacoe-verify > /dev/null
+if [ "$?" -eq "4" ] ; then 
+    echo "Could not begin update: DYNACOE_INSTALL_PATH is missing."
+    echo "Windows users: Sometimes, environment variables do not propogate until after some base"
+    echo "programs are restarted with these vars in place."
+    echo "If you are on windows and just installed, try resetting your machine."
+    exit 3
+fi
+
+rm -rf "$DYNACOE_INSTALL_PATH/userspace/temp-pack"
+mkdir "$DYNACOE_INSTALL_PATH/userspace/temp-pack"
+if [ ! "$offline" = "" ]; then 
+    cp "$2" "$DYNACOE_INSTALL_PATH/userspace/temp-pack/dynacoe.tar.xz"
+fi
+cd "$DYNACOE_INSTALL_PATH/userspace/temp-pack"
+
+#Get the installation!
+
+if [ "$offline" = "" ]; then 
+    wget https://jcorks.github.io/Dynacoe/release/win/dynacoe.tar.xz
+    if [ ! "$?" -eq "0" ]; then 
+        echo "Download of release version failed... (Are you connected to the internet?)"
+        exit 1
+    fi 
+fi
+
+
+#unpack
+
+xz -d ./dynacoe.tar.xz 
+if [ ! "$?" -eq "0" ]; then 
+    echo "Could not unpack retrieved release version. (Is it corrupt?)"
+    exit 2;
+fi
+tar xzf ./dynacoe.tar
+if [ ! "$?" -eq "0" ]; then 
+    echo "Could not unpack retrieved release version. (Is it corrupt?)"
+    return 2;
+fi
+rm ./dynacoe.tar
+
+
+
+# next within /ver/, check to see if a directory already exists 
+# with the name that appears as the first line of the VERSION file within 
+# the unpacked directory. If it doesnt, just make the directory, and regardless,
+# copy everything in.
+
+verFile=$(cat ./VERSION)
+ver=""
+for name in $verFile; do 
+    ver="$name"
+    break
+done
+
+
+if [ "$ver" = "" ]; then 
+    echo "ERROR: the retrieved release package claims that it doesn't have a version..."
+    exit 3;
+fi
+
+
+# handle first timers too while we are at it!
+if [ ! -d "$DYNACOE_INSTALL_PATH/userspace/ver" ]; then 
+    mkdir "$DYNACOE_INSTALL_PATH/userspace/ver"
+    echo "$ver" > "$DYNACOE_INSTALL_PATH/userspace/ver/DEFAULT"
+fi
+
+
+
+# finally we can actually copy things into the directory
+
+if [ ! -d "$DYNACOE_INSTALL_PATH/userspace/ver/$ver" ]; then 
+    mkdir "$DYNACOE_INSTALL_PATH/userspace/ver/$ver"
+else 
+    echo "Already have newest version. Refreshing installation..."
+    rm -rf "$DYNACOE_INSTALL_PATH/userspace/ver/$ver"
+    mkdir "$DYNACOE_INSTALL_PATH/userspace/ver/$ver"
+fi
+
+mv ./* "$DYNACOE_INSTALL_PATH/userspace/ver/$ver/"
+
+
+
+echo "Successfully retrieved version [$ver] of Dynacoe."

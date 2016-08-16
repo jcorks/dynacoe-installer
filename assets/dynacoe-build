@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# dynacoe-build: builds a project
+# Johnathan Corkeyr, 2016
+#
+#
+#
+
+
+dynacoe-verify > /dev/null
+if [ "$?" -ne "0" ] ; then 
+    echo "Not a valid build directory. Exiting build."
+    echo "(Try dynacoe-verify to see whats wrong)"
+    exit 1
+fi
+
+# TODO: handle spaces? maybe optional double quotes? but seems 
+# a bit too obtuse to require..
+filesList=$(cat ./SOURCES)
+lostFiles=""
+for file in $filesList; do 
+    if [ ! -f "$file" ]; then 
+        echo "The source \"$file\" could not be found."
+        lostFiles="y"
+    fi    
+done
+
+if [ "$lostFiles" = "y" ]; then
+    echo "One or more sources could not be found. Aborting build."
+    exit 3
+fi
+
+
+
+echo "ARGS: $@"
+cd ./.dynacoe
+make $@

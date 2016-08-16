@@ -1,0 +1,55 @@
+#!/bin/sh
+
+
+
+# dynacoe-config: allows users to switch through Dynacoe installations that they have
+if [ ! -d "$DYNACOE_INSTALL_PATH/userspace/ver/" ]; then 
+    echo "There do not seem to be any Dynacoe builds installed. Try"
+    echo "dynacoe-update to retrieve the latest (or you cna try building your own from the git repo!)"
+    exit 1
+fi
+
+
+
+# If given no arguments, Enumerate installed builds
+
+available=$(ls "$DYNACOE_INSTALL_PATH/userspace/ver/")
+current=$(cat "$DYNACOE_INSTALL_PATH/userspace/ver/DEFAULT")
+if [ "$#" -eq "0" ]; then 
+    echo "Currently installed versions of Dynacoe:"
+
+
+    
+    for ver in $available; do 
+        if [ "$ver" = "DEFAULT" ]; then 
+            continue
+        fi
+
+        if [ "$current" = "$ver" ]; then
+            echo "(main) $ver"
+        else
+            echo "       $ver"
+        fi
+    done
+    exit 0
+    
+fi
+
+
+
+
+target="$1"
+for ver in $available; do 
+    if [ "$ver" = "DEFAULT" ]; then 
+        continue
+    fi
+
+    if [ "$target" = "$ver" ]; then        
+        echo "$target" > "$DYNACOE_INSTALL_PATH/userspace/ver/DEFAULT"
+        echo "$target now set as the main build."
+        exit 0
+    fi
+done
+
+echo "build $target does not exist as an installed build version. Run this"
+echo "script with no arguments to see all available versions installed."

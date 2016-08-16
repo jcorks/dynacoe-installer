@@ -1,0 +1,12 @@
+#!/bin/sh
+
+dynacoe-verify > /dev/null
+if [ "$?" -ne "0" ] ; then 
+    echo "Not a valid build directory. Nothing to remove."
+    echo "(Try dynacoe-verify to see whats wrong)"
+    exit 1
+fi
+
+rm -rf ./.dynacoe/
+
+exit 

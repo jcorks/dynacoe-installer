@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ "$DYNACOE_INSTALL_PATH" = "" ]; then 
+    echo "DYNACOE_INSTALL_PATH is missing. If you're on Windows and just installed, try resetting your machine."
+    exit 4
+fi
+
+if [ ! -d "./.dynacoe" ]; then 
+    echo "It looks like this directory is not a Dynacoe directory. See dynacoe-add"
+    exit 1
+fi 
+
+
+if [ ! -f "./.dynacoe/makefile" ] ||
+   [ ! -f "./.dynacoe/PROJECT"  ] ||
+   [ ! -f "./.dynacoe/MODE"     ] ; then 
+    echo "The build directory seems to be missing a few internal files."
+    exit 2
+fi
+
+if [ ! -f "./SOURCES" ] ; then 
+    echo "It looks like this directory is missing a SOURCES file."
+    echo "The sources file should contain a list of sources to compile into"
+    echo "your project. Please re-create it to build."
+    exit 3
+fi 
+
+
+exit 0

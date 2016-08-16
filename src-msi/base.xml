@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='windows-1252'?>
+
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+        <!-- 
+
+
+         Base wix source for Dynacoe-installer 
+         
+         
+         -->
+
+    <Product Name='Dynacoe' Manufacturer='Coebeef'
+        Id='62fd74e9-cd58-4f26-8691-3a00061657db' 
+        UpgradeCode='cfa0529b-c8f3-484d-8ac4-0682fde4a5ed'
+        Language='1033' Codepage='1252' Version='0.9.0'>
+    <Package Id='*' Keywords='Installer' Description="Dynacoe toolkit installer for Windows"
+        Comments='The Dynacoe project is maintained by Johnathan Corkery (jcorkery@umich.edu). The MSYS2 project can be found here https://github.com/msys2' Manufacturer='Coebeef'
+        InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+            
+    <Media Id='1' Cabinet='base.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
+    <Property Id='DiskPrompt' Value="Dynacoe installation source [1]" />
+    
+    
+
+    
+    
+    <!-- base installation directory is always TARGETDIR -->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+    <Directory Id='INSTALLLOCATION' Name='Dynacoe'>
+        
+        <!-- Register the package + icon in menus -->
+        <Component Id="PROGRAM_MENU_REF" Guid="b1c635f9-1ac8-4a46-a73f-532cbbc9041e">
+            <RemoveFolder Id='PROGRAM_MENU_REF' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='[INSTALLLOCATION]' KeyPath='yes' />
+            <Environment Id='dynacoe_path' Action="set" Name="DYNACOE_INSTALL_PATH" Value="[INSTALLLOCATION]" System="yes"/>
+        </Component>
+        
+        <!-- add the scripts to the system path (adding at the end just in case )!! -->
+        <Component Id="PROGRAM_PATH_VAR_REF" Guid="30f8d2fa-a049-45ef-9c2b-738b7a578526">
+            <RemoveFolder Id='PROGRAM_PATH_VAR_REF' On='uninstall' />
+            <Environment Id='path_bin' Action="set" Name="PATH" Part='last' System="yes" Value="[INSTALLLOCATION]\bin"/>
+        </Component>
+
+        <!-- Register additional key for explorer context-menu. Fancy! -->
+            <Component Id="PROGRAM_SHELL_REF" Guid="5034d5d2-7848-45c6-bd7e-46c640834b99">
+            <RemoveFolder Id='PROGRAM_SHELL_REF' On='uninstall' />
+            <RegistryKey Root="HKLM"
+                Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Dynacoe"
+                Action="createAndRemoveOnUninstall">
+                <RegistryValue Type="string" Value="Open Term Here"/>
+                <RegistryValue Key="command" Type="string" Value="cmd.exe [INSTALLLOCATION]\shortcut.bat"/>
+            </RegistryKey>            
+            
+        </Component>
+    
+        <Directory Id='DesktopFolder' Name='DesktopFolder'/>
+    
+        <Directory Id='userspace_f' Name='userspace'>
+          <Component Id="BLANK_c" Guid="e574717d-983f-4a36-942e-5e583dfa71db">
+            <File Id="BLANK_f" Name="null" DiskId='1' Source="../assets/win/null"/>
+          </Component>
+        </Directory>
+        
+        
+        <!-- all utility scripts are located in bin -->
+        <Directory Id='bin_f' Name='bin'>
+            <Component Id='dynacoe_scripts_c' Guid='a48ef361-d7a9-40ce-ac5a-f87136a86de0'>
+                <File Id='dynacoe_add_f'            Name='dynacoe-add'          DiskId='1' Source='../assets/dynacoe-add'/>
+                <File Id='dynacoe_config_f'         Name='dynacoe-config'       DiskId='1' Source='../assets/dynacoe-config'/>
+                <File Id='dynacoe_update_f'         Name='dynacoe-update'       DiskId='1' Source='../assets/dynacoe-update'/>
+                <File Id='dynacoe_build_f'          Name='dynacoe-build'        DiskId='1' Source='../assets/dynacoe-build'/>
+                <File Id='dynacoe_verify_f'         Name='dynacoe-verify'       DiskId='1' Source='../assets/dynacoe-verify'/> 
+            </Component>
+        </Directory>
+        
+        
+        
+        <!-- The base makefile that will depend on the settings file in the project directory-->
+        <Component Id='makefile_c' Guid='45084d5b-bb5a-44f3-9288-42f29c8db408'>
+            <File Id='makefile_f' Name='makefile' DiskId="1" Source="../assets/makefile"/>
+        </Component>
+    
+    
+        <!-- main shortcut that reroutes to msys2 -->
+        <Component Id='shortcut_c' Guid='92e65d04-24cf-449d-8f34-77bcd0a0fc3c'>
+            <File Id='shortcut_f' Name='shortcut.bat' DiskId="1" Source="../assets/win/shortcut.bat">
+                <Shortcut Id='mainshortcut' Directory='DesktopFolder'  Name='Dynacoe Build Environment' WorkingDirectory='INSTALLDIR' Icon='iconmain.ico' IconIndex="0" Advertise="yes"/>
+            </File>
+        </Component>
+        
+        
+        <Component Id='pre_c' Guid='f6374176-9ddf-4f04-b3fa-9474470c34f9'>
+            <File Id='pre_f'  Name='dynacoe-install-pre.vbs'     DiskId="1" Source="../assets/win/dynacoe-install-pre.vbs"/>
+        </Component>
+        
+        <!-- utilities to pull in MSYS2 -->
+        <Directory Id='boostrap_d' Name='bootstrap'>
+            <Component Id='boostrap_c' Guid='a14cedf8-362f-4100-9b43-0e631950075a'>
+                <File Id='tar_f'   Name='tar.exe'   DiskId="1" Source='../assets/win/tar.exe'/>
+                <File Id='wget_f'  Name='wget.exe'  DiskId="1" Source='../assets/win/wget.exe'/>
+                <File Id='xzdec_f' Name='xzdec.exe' DiskId="1" Source='../assets/win/xzdec.exe'/>
+                <File Id='propagate_f' Name='propagate.exe' DiskId="1" Source='../assets/win/propagate.exe'/>
+            </Component>
+        </Directory>
+        
+        </Directory>
+    </Directory>
+        
+        
+    
+    
+    <!-- add actual components for the isntaller here -->
+    
+    <Feature Id='MainUI' Title='Dynacoe' Description='Toolkit helper package'
+        Display='expand' Level='1'>
+        <Feature Id='Main'>
+            <ComponentRef Id='dynacoe_scripts_c'/>
+            <ComponentRef Id='makefile_c'/>
+            <ComponentRef Id='shortcut_c'/>
+            <ComponentRef Id='PROGRAM_PATH_VAR_REF'/>
+            <ComponentRef Id='PROGRAM_MENU_REF'/>
+            <ComponentRef Id='PROGRAM_SHELL_REF'/>
+            <ComponentRef Id='boostrap_c'/>
+            <ComponentRef Id='pre_c'/>
+            <ComponentRef Id='BLANK_c'/>
+        </Feature>
+    </Feature>
+    
+    
+    <!-- add post install script -->
+    <CustomAction Id="post_setup" 
+        Impersonate="no" 
+        Return="check"
+        Directory='INSTALLLOCATION'
+        Execute='deferred'
+        ExeCommand="wscript.exe /E:VBS dynacoe-install-pre.vbs"
+        />
+
+        
+    <InstallExecuteSequence>
+        <Custom Action="post_setup"    Before="InstallFinalize">NOT Installed AND NOT REMOVE</Custom>
+    </InstallExecuteSequence>
+    
+    <!-- add additional settings, shortcuts, and env vars, etc -->
+    <Icon Id='iconmain.ico' SourceFile='../assets/win/dynacoe-icon-full.ico'/>
+    
+ 
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <UIRef Id="WixUI_Minimal" />
+    <UIRef Id="WixUI_ErrorProgressText" />        
+    <WixVariable Id="WixUILicenseRtf" Value="../assets/win/dynacoe-installer.rtf" />
+    <!--<WixVariable Id="WixUIBannerBmp" Value="../assets/banner.bmp" />-->
+    <WixVariable Id="WixUIDialogBmp" Value="../assets/win/dialog.bmp" />
+    </Product>
+</Wix>

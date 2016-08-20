@@ -1,11 +1,33 @@
 #!/bin/sh
 
+if [ "$1" = "--help" ]; then 
+    echo "dynacoe-config: switches between installed builds of Dynacoe"
+    echo ""
+    echo "usage:"
+    echo "       dynacoe-config [build version]"
+    echo ""
+    echo ""
+    echo "dynacoe-config allows you to swap what versions of Dynacoe"
+    echo "dynacoe-build will use when building your projects. Each version"
+    echo "of Dynacoe has its own set of headers, depednencies, and library,"
+    echo "all of which can either be acquired from dynacoe-update, or from"
+    echo "your own Dynacoe build."
+    echo "" 
+    echo "Running dynacoe-config with no arguments prints a list of"
+    echo "currently installed Dynacoe versions. Passing the version name "
+    echo "will set the current Dynacoe version to use for dynacoe-build invocations"
+    echo ""
+    echo "Part of the Dynacoe project."
+    echo "https://github.com/jcorks/Dynacoe"
+    echo "Johnathan Corkery (jcorkery@umich.edu)"
+    exit 0
+fi
 
 
 # dynacoe-config: allows users to switch through Dynacoe installations that they have
 if [ ! -d "$DYNACOE_INSTALL_PATH/userspace/ver/" ]; then 
     echo "There do not seem to be any Dynacoe builds installed. Try"
-    echo "dynacoe-update to retrieve the latest (or you cna try building your own from the git repo!)"
+    echo "dynacoe-update to retrieve the latest (or you can try building your own from the git repo!)"
     exit 1
 fi
 

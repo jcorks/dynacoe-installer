@@ -5,12 +5,53 @@
 #
 #
 #
+if [ "$1" = "--help" ]; then 
+    echo "dynacoe-add: converts a directory into a Dynacoe project."
+    echo ""
+    echo "usage:"
+    echo "       dynacoe-add [project-name] [options]"
+    echo ""
+    echo ""
+    echo "Options:"
+    echo "       --force   Normally, dynacoe-add will not do anything to a directory"
+    echo "                 that it thinks is already a Dynacoe directory. This option"
+    echo "                 bypasses this behavior and attempts to make"
+    echo "                 the directory a Dynacoe directory regardless."
+    echo ""
+    echo ""
+    echo "dynaoce-add will turn the current directory into a Dynacoe project, adding"
+    echo "special files and directories required for a directory to be considered"
+    echo "a Dynaoce project. A directory will need to be a valid Dynacoe project" 
+    echo "before using many of the other dynacoe- tools. dynacoe-add will never"
+    echo "affect any files or directories in the target directory on the stipulation "
+    echo "that they are not named any of the following:"
+    echo ""
+    echo " - SOURCES"
+    echo " - .dynacoe"
+    echo ""
+    echo ""
+    echo "As these are names of the meta files that will be used by Dynacoe."
+    echo ""
+    echo "Moving projects around"
+    echo "----------------------"
+    echo ""
+    echo "In the case that you are transferring projects to different machines,"
+    echo "note that the project might break. In this case, simply dynacoe-remove"
+    echo "in that directory and dynacoe-add again in the same directory. This should"
+    echo "restore the meta files to their proper state without touching anything else."
+    echo ""
+    echo "Part of the Dynacoe project."
+    echo "https://github.com/jcorks/Dynacoe"
+    echo "Johnathan Corkery (jcorkery@umich.edu)"
+    exit 0
+fi
+
 dynacoe-verify > /dev/null
 if [ "$?" -eq "4" ] ; then 
     echo "Could not set up build directory: DYNACOE_INSTALL_PATH is missing."
     echo "Windows users: Sometimes, environment variables do not propogate until after some base"
     echo "programs are rstarted with these vars in place."
-    echo "If you are on windows and just installed, try resetting your machine."
+    echo "If you are on Windows and just installed, try resetting your machine."
     exit 3
 fi
 

@@ -1,12 +1,44 @@
 #!/bin/sh
 
-dynacoe-verify > /dev/null
-if [ "$?" -ne "0" ] ; then 
-    echo "Not a valid build directory. Nothing to remove."
-    echo "(Try dynacoe-verify to see whats wrong)"
-    exit 1
+# dynacoe-remove: cleans up a dynacoe directory
+# handy if your directory got corrupted somehow
+# pass "--force" to bypass verification ( which is likely what you want anyway)
+
+if [ "$1" = "--help" ]; then 
+    echo "dynacoe-remove: Removes meta files from the Dynacoe directory"
+    echo ""
+    echo "usage: "
+    echo "       dynacoe-remove [options]"
+    echo ""
+    echo ""
+    echo "Options:"
+    echo ""
+    echo "       --force   Attempt to remove the meta files even if the"
+    echo "                 the current directory cannot be identified as "
+    echo "                 a valid Dynacoe directory."
+    echo ""
+    echo ""
+    echo "dynacoe-remove removes all the meta files that make Dynacoe projects"
+    echo "Dynacoe projects. In more specific terms, this will remove the "
+    echo ".dynacoe meta directory and all sub-objects. This will NEVER"
+    echo "remove any other files. Note that the SOURCES file listing will"
+    echo "be left untouched."
+    echo ""
+    echo "Part of the Dynacoe project."
+    echo "https://github.com/jcorks/Dynacoe"
+    echo "Johnathan Corkery (jcorkery@umich.edu)"
+    exit 0
+fi
+
+if [ ! "$1" = "--force" ]; then
+    dynacoe-verify > /dev/null
+    if [ "$?" -ne "0" ] ; then 
+        echo "Not a valid build directory. Nothing to remove."
+        echo "(Try dynacoe-verify to see whats wrong)"
+        exit 1
+    fi
 fi
 
 rm -rf ./.dynacoe/
 
-exit 
+exit 0

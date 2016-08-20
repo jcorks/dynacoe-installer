@@ -63,11 +63,10 @@ all: $(USER_OBJS)
 
 # each object file
 %.o: %
-	echo $(USER_OBJS)
-    @echo Compiling %
+	@echo "Compiling $@"
 	@$(CC) $(OS_FLAGS) $(FLGS) $(LD)  $(INCS) -c $(filter %$(patsubst %.o,%,$@), $(ALL_SRCS)) -o $@
 
 
 	
 clean:
-	rm -f $(USER_OBJS) $(OUTPUT_NAME)
+	rm -f $(USER_OBJS) ../$(OUTPUT_NAME)

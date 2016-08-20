@@ -1,5 +1,22 @@
 #!/bin/sh
 
+if [ "$1" = "--help" ]; then 
+    echo "dynacoe-verify: verifies Dynacoe project directories"
+    echo ""
+    echo "usage:"
+    echo "       dynacoe-verify"
+    echo ""
+    echo "dynacoe-verify will check to see if the current directory"
+    echo "is a valid Dynacoe directory. In the case that it is not,"
+    echo "a nonzero exit code is returned and a message pertaining to "
+    echo "the error is printed to stdout."
+    echo ""
+    echo "Part of the Dynacoe project."
+    echo "https://github.com/jcorks/Dynacoe"
+    echo "Johnathan Corkery (jcorkery@umich.edu)"
+    exit 0
+fi
+
 if [ "$DYNACOE_INSTALL_PATH" = "" ]; then 
     echo "DYNACOE_INSTALL_PATH is missing. If you're on Windows and just installed, try resetting your machine."
     exit 4

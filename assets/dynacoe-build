@@ -6,6 +6,50 @@
 #
 #
 
+if [ "$1" = "--help" ]; then 
+    echo "dynacoe-build: builds a binary form of a Dynacoe project."
+    echo "usage:"
+    echo "       dynacoe-build [make arguments] ..."
+    echo ""
+    echo ""
+    echo "If used in a valid Dynacoe directory, dynacoe-build will"
+    echo "try to build the project from the SOURCES file. The SOURCES"
+    echo "should contain a list of the C++ sources that will be compiled"
+    echo "for the project."
+    echo ""
+    echo "Internally, dynacoe-build calls 'make' and 'g++' to perform"
+    echo "the build. Thus, any arguments that are passed to dynacoe-build"
+    echo " are directly handed to the 'make' call."
+    echo ""
+    echo ""
+    echo "Understood commands"
+    echo "-------------------"
+    echo "The makefile used by dynacoe-build is able to interpret the"
+    echo "the following arguments:"
+    echo ""
+    echo "      clean     removes all object and binary files produced"
+    echo "                by a previous dynacoe-build command."
+    echo ""
+    echo ""
+    echo "SOURCES file"
+    echo "------------"
+    echo "The sources file contains an enumeration of your project sources."
+    echo "The file should be organized as such:"
+    echo ""
+    echo "[path to file 1]"
+    echo "[path to file 2]"
+    echo "[path to file 3]"
+    echo "..."
+    echo ""
+    echo "Where each [path to file] is either an absolute path or a relative"
+    echo "path from this project's directory."
+    echo ""
+    echo "Part of the Dynacoe project."
+    echo "https://github.com/jcorks/Dynacoe"
+    echo "Johnathan Corkery (jcorkery@umich.edu)"
+    exit 0
+fi
+
 
 dynacoe-verify > /dev/null
 if [ "$?" -ne "0" ] ; then 

@@ -42,13 +42,13 @@
         </Component>
 
         <!-- Register additional key for explorer context-menu. Fancy! -->
-            <Component Id="PROGRAM_SHELL_REF" Guid="5034d5d2-7848-45c6-bd7e-46c640834b99">
+        <Component Id="PROGRAM_SHELL_REF" Guid="5034d5d2-7848-45c6-bd7e-46c640834b99">
             <RemoveFolder Id='PROGRAM_SHELL_REF' On='uninstall' />
-            <RegistryKey Root="HKLM"
-                Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Dynacoe"
+            <RegistryKey Root="HKCR"
+                Key="FOLDER\shell\Dynacoe"
                 Action="createAndRemoveOnUninstall">
-                <RegistryValue Type="string" Value="Open Term Here"/>
-                <RegistryValue Key="command" Type="string" Value="cmd.exe [INSTALLLOCATION]\shortcut.bat"/>
+                <RegistryValue Type="string" Value="Open Dynacoe Here"/>
+                <RegistryValue Key="command" Type="string" Value="cmd.exe /C [INSTALLLOCATION]\shortcut.bat here"/>
             </RegistryKey>            
             
         </Component>

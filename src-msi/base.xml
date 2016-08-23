@@ -48,7 +48,7 @@
                 Key="FOLDER\shell\Dynacoe"
                 Action="createAndRemoveOnUninstall">
                 <RegistryValue Type="string" Value="Open Dynacoe Here"/>
-                <RegistryValue Key="command" Type="string" Value="cmd.exe /C [INSTALLLOCATION]\shortcut.bat here"/>
+                <RegistryValue Key="command" Type="string" Value='cmd.exe /C [INSTALLLOCATION]\shortcut.bat "%1"'/>
             </RegistryKey>            
             
         </Component>

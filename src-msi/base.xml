@@ -93,6 +93,10 @@
         <Component Id='pre_c' Guid='f6374176-9ddf-4f04-b3fa-9474470c34f9'>
             <File Id='pre_f'  Name='dynacoe-install-pre.vbs'     DiskId="1" Source="../assets/win/dynacoe-install-pre.vbs"/>
         </Component>
+
+        <Component Id='post_c' Guid='390ed0df-631d-4b1c-a201-5060e34555cc'>
+            <File Id='post_f'  Name='dynacoe-install-post.vbs'     DiskId="1" Source="../assets/win/dynacoe-install-post.vbs"/>
+        </Component>
         
         <!-- utilities to pull in MSYS2 -->
         <Directory Id='boostrap_d' Name='bootstrap'>
@@ -123,13 +127,14 @@
             <ComponentRef Id='PROGRAM_SHELL_REF'/>
             <ComponentRef Id='boostrap_c'/>
             <ComponentRef Id='pre_c'/>
+            <ComponentRef Id="post_c"/>
             <ComponentRef Id='BLANK_c'/>
         </Feature>
     </Feature>
     
     
     <!-- add post install script -->
-    <CustomAction Id="post_setup" 
+    <CustomAction Id="pre_setup" 
         Impersonate="no" 
         Return="check"
         Directory='INSTALLLOCATION'
@@ -137,14 +142,22 @@
         ExeCommand="wscript.exe /E:VBS dynacoe-install-pre.vbs"
         />
 
+    <CustomAction Id="post_setup" 
+        Impersonate="yes" 
+        Return="asyncNoWait"
+        Directory='INSTALLLOCATION'
+        ExeCommand="wscript.exe /E:VBS dynacoe-install-post.vbs"
+        />
+
         
     <InstallExecuteSequence>
-        <Custom Action="post_setup"    Before="InstallFinalize">NOT Installed AND NOT REMOVE</Custom>
+        <Custom Action="pre_setup"     Before="InstallFinalize">NOT Installed AND NOT REMOVE</Custom>
+        <Custom Action="post_setup"    After="InstallFinalize">       NOT Installed AND NOT REMOVE</Custom>
     </InstallExecuteSequence>
     
     <!-- add additional settings, shortcuts, and env vars, etc -->
     <Icon Id='iconmain.ico' SourceFile='../assets/win/dynacoe-icon-full.ico'/>
-    
+    <Property Id="ARPPRODUCTICON" Value="iconmain.ico"/>
  
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
     <UIRef Id="WixUI_Minimal" />

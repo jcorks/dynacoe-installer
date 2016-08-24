@@ -57,7 +57,7 @@ fi
 
 if [ ! -d "$DYNACOE_INSTALL_PATH/userspace/ver" ]; then 
     echo "No versions of dynacoe are currently installed. Unable to add directory!"
-    echo "(try dynaoce-update to retrieve the latest build!)"
+    echo "(try dynacoe-update to retrieve the latest build!)"
     exit 4
 fi
 

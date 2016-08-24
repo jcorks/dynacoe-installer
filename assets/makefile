@@ -31,7 +31,13 @@ LD = -std=c++11
 #DYNACOE_INPUT_BACKEND_LIBS_GAINPUT = -lgainputstatic
 DYNACOE_INC_PATHS   = /DynacoeSrc/includes/  /$(shell cat "$(DYNACOE_LIB_PATH)/lib_incpaths")
 DYNACOE_LIB_PATHS   = $(shell cat "$(DYNACOE_LIB_PATH)lib_libpaths")   
-DYNACOE_LIB_NAME    = -ldynacoe 
+ifeq ($(fallback),TRUE)
+    DUMMY=$(shell echo "**USING FALLBACK**")
+    DYNACOE_LIB_NAME    = -ldynacoe-fallback 
+else
+    DYNACOE_LIB_NAME    = -ldynacoe 
+endif
+
 DYNACOE_LIBS        =  $(shell cat "$(DYNACOE_LIB_PATH)build_libs") 
 
 

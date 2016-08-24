@@ -27,8 +27,14 @@ if [ "$1" = "--help" ]; then
     echo "The makefile used by dynacoe-build is able to interpret the"
     echo "the following arguments:"
     echo ""
-    echo "      clean     removes all object and binary files produced"
-    echo "                by a previous dynacoe-build command."
+    echo "      clean          removes all object and binary files produced"
+    echo "                     by a previous dynacoe-build command."
+    echo ""
+    echo "      fallback=TRUE  builds with the registered fallback build. Fallback"
+    echo "                     builds are built with backends targetting legacy systems"
+    echo "                     This may be needed depending on how old your"
+    echo "                     target systems are. Usually, the most relevant factor in this"
+    echo "                     is rendering capabilities."
     echo ""
     echo ""
     echo "SOURCES file"
@@ -76,6 +82,5 @@ fi
 
 
 
-echo "ARGS: $@"
 cd ./.dynacoe
 make $@

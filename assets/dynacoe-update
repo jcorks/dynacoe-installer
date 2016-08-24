@@ -16,7 +16,7 @@ if [ "$1" = "--help" ]; then
     echo "dynacoe-update: installs new versions of Dynacoe"
     echo ""
     echo "usage:"
-    echo "       dynacoe-update [--offline [target archive]]"
+    echo "       dynacoe-update [--offline [target archive]] [--dev]"
     echo ""
     echo ""
     echo "dynacoe-update installs new versions of dynacoe that can "
@@ -31,9 +31,16 @@ if [ "$1" = "--help" ]; then
     echo "install. Offline builds can be constructed from the Dynacoe "
     echo "git project (https://github.com/jcorks/Dynacoe)."
     echo ""
+    echo ""
+    echo "Passing --dev will pull the current dev build for dynacoe and"
+    echo "set it up as if pulling for the stable release. Unstable releases"
+    echo "will have the newest additions and fixes, but may have undocumented"
+    echo "issues."
+    echo ""
     echo "Part of the Dynacoe project."
     echo "https://github.com/jcorks/Dynacoe"
     echo "Johnathan Corkery (jcorkery@umich.edu)"
+    echo ""
     
     exit 0
 fi
@@ -47,6 +54,10 @@ if [ "$1" = "--offline" ]; then
         exit 4
     fi
 fi
+
+if [ "$1" = "--dev" ]; then 
+    unstable="y"
+fi 
 
 dynacoe-verify > /dev/null
 if [ "$?" -eq "4" ] ; then 
@@ -67,9 +78,13 @@ cd "$DYNACOE_INSTALL_PATH/userspace/temp-pack"
 #Get the installation!
 
 if [ "$offline" = "" ]; then 
-    wget https://jcorks.github.io/Dynacoe/release/win/dynacoe.tar.xz
+    if [ "$unstable" = "" ]; then
+        wget https://jcorks.github.io/Dynacoe/release/win/dynacoe.tar.xz
+    else 
+        wget https://jcorks.github.io/Dynacoe/dev/win/dynacoe.tar.xz
+    fi
     if [ ! "$?" -eq "0" ]; then 
-        echo "Download of release version failed... (Are you connected to the internet?)"
+        echo "Download Dynacoe version failed... (Are you connected to the internet?)"
         exit 1
     fi 
 fi

@@ -57,12 +57,22 @@ if [ "$1" = "--help" ]; then
 fi
 
 
+
 dynacoe-verify > /dev/null
 if [ "$?" -ne "0" ] ; then 
     echo "Not a valid build directory. Exiting build."
     echo "(Try dynacoe-verify to see whats wrong)"
     exit 1
 fi
+
+# need to update the symbolic link. Apperently 
+# the target contents wont update (likely because
+# recursive links are emulated)
+mkdir ./.dynacoe/trash
+mv ./.dynacoe/userspace-ver ./.dynacoe/trash 
+rm -rf ./.dynacoetrash
+ln -svTf "$DYNACOE_INSTALL_PATH/userspace/ver" ./.dynacoe/userspace-ver > /dev/null
+
 
 # TODO: handle spaces? maybe optional double quotes? but seems 
 # a bit too obtuse to require..

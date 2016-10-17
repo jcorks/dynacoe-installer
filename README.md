@@ -8,7 +8,6 @@ project
 page. Thanks! ***
 
 If you're looking for the actual installers, go here http://coebeef.net/dynacoe
-If you're look
 
 
 The source here is for various installation suites that 
@@ -36,8 +35,8 @@ Supported platforms:
     
 Windows
 -------
-For windows users an, MSI is available for Vista and later. The installer, while tiny itself,
-will install for you [MSYS2](https://msys2.github.io/) to then be able to use all the assets in a uniform 
+For windows users, an MSI installer is available for Vista and later. The installer, while tiny itself,
+will pull and install for you [MSYS2](https://msys2.github.io/) to then be able to use all the assets in a uniform 
 way, as many of them were designed to be used in a unix-like envornment.
 
 To build the installer, you'll need a version of the WiX Toolset, preferrably above 3.0.

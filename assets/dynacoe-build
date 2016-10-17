@@ -70,7 +70,7 @@ fi
 # recursive links are emulated)
 mkdir ./.dynacoe/trash
 mv ./.dynacoe/userspace-ver ./.dynacoe/trash 
-rm -rf ./.dynacoetrash
+rm -rf ./.dynacoe/trash
 ln -svTf "$DYNACOE_INSTALL_PATH/userspace/ver" ./.dynacoe/userspace-ver > /dev/null
 
 

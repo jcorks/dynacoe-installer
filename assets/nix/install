@@ -1,0 +1,80 @@
+#!/bin/sh
+
+#Install script
+
+
+echo ""
+echo "Dynacoe: sh installer"
+echo "Johnathan Corkery, 2016"
+echo ""
+echo ""
+
+DYNACOE_INSTALL_PATH=""
+if [ "$1" != "" ]; then 
+    DYNACOE_INSTALL_PATH=$1
+    if [ ! -d "$DYNACOE_INSTALL_PATH" ]; then 
+        echo "$DYNACOE_INSTALL_PATH is not a valid install directory"
+        exit 1;
+    fi
+else
+    echo "Please specify the fully-qualified path to install to."
+
+fi
+DYNACOE_INSTALL_PATH=$DYNACOE_INSTALL_PATH/dynacoe
+
+
+if [ ! -f "dynacoe-assets.tar.xz" ]; then
+    echo "Error: the installation script requires dynacoe-install.tar.xz to"
+    echo "exist in the running directory, as it is the package that contains"
+    echo "what to install."
+    exit 1;
+fi
+
+if [ -d "$DYNACOE_INSTALL_PATH" ]; then 
+    echo "Removing old installation..."
+    rm -rf $DYNACOE_INSTALL_PATH
+fi
+
+
+mkdir $DYNACOE_INSTALL_PATH
+cp ./dynacoe-assets.tar.xz $DYNACOE_INSTALL_PATH
+cd $DYNACOE_INSTALL_PATH
+if [ ! "$?" -eq "0" ]; then 
+    echo "Installation path could not be created! (unsufficent permissions?)"
+    echo "It is recommended that you install to a local user directory."
+    exit 1;
+fi 
+
+
+
+#first untar
+tar xf ./dynacoe-assets.tar.xz
+rm ./dynacoe-assets.tar.xz
+
+# move out items
+mv ./base/* ./
+rmdir ./base
+
+# set all the tools to be executable
+chmod +x ./bin/dynacoe*
+
+
+
+
+
+temp=$DYNACOE_INSTALL_PATH/bin
+echo "Done!"
+echo ""
+echo ""
+echo "For your convenience, it is probably best to append..."
+echo $temp 
+echo "...to your PATH, as this is the directory that contains"
+echo "the dynacoe tool programs"
+echo ""
+echo "For them to even function, the environment variable"
+echo "DYNACOE_INSTALL_PATH needs to be set to"
+echo $DYNACOE_INSTALL_PATH
+echo "in your building environment"
+echo ""
+echo "Have fun!"
+echo ""

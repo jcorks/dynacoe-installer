@@ -27,7 +27,7 @@ the Dynacoe library
 
     
 
-Supported platforms:
+Tested platforms:
 - Windows
 - Debian
     
@@ -42,12 +42,17 @@ way, as many of them were designed to be used in a unix-like envornment.
 To build the installer, you'll need a version of the WiX Toolset, preferrably above 3.0.
 
 
+Debian (Debian-based distributions), other Linux
+-----------------------
+
+For all *nix systems, there is a minimal installation script that will install dynacoe in a
+specified directory. You may encounter errors for missing libraries, but on most systems 
+it will be pretty clear whats missing. In such a case, you can use your package manager to resolve 
+the missing library.
 
 
-Debian (and Debian-based distributions)
----------------------------------------
 
-Still in the planning phases, but will be relatively simple. Aside from setting up the 
+Still in the planning phases, but there will be a relatively simple deb option. Aside from setting up the 
 scripts and paths, it will install prereq packages to run the stable main build.
 
 

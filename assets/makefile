@@ -31,12 +31,7 @@ LD = -std=c++11
 #DYNACOE_INPUT_BACKEND_LIBS_GAINPUT = -lgainputstatic
 DYNACOE_INC_PATHS   = /DynacoeSrc/includes/  /$(shell cat "$(DYNACOE_LIB_PATH)/lib_incpaths")
 DYNACOE_LIB_PATHS   = $(shell cat "$(DYNACOE_LIB_PATH)lib_libpaths")   
-ifeq ($(fallback),TRUE)
-    DUMMY=$(shell echo "**USING FALLBACK**")
-    DYNACOE_LIB_NAME    = -ldynacoe-fallback 
-else
-    DYNACOE_LIB_NAME    = -ldynacoe 
-endif
+DYNACOE_LIB_NAME    = -ldynacoe 
 
 DYNACOE_LIBS        =  $(shell cat "$(DYNACOE_LIB_PATH)build_libs") 
 
@@ -63,8 +58,10 @@ ALL_SRCS := $(SRCS)
 
 
 all: $(USER_OBJS)
-	$(CC) $(OS_FLAGS)  $(LD) $(FLGS) $(DYNACOE_LIB_PATHS)  $(USER_OBJS) -o ../$(OUTPUT_NAME)  $(LIBS)  
+	$(CC) -O2 $(OS_FLAGS)  $(LD) $(FLGS) $(DYNACOE_LIB_PATHS)  $(USER_OBJS) -o ../$(OUTPUT_NAME)  $(LIBS)  
 
+debug: $(USER_OBJS)
+	$(CC) -g -pg $(OS_FLAGS)  $(LD) $(FLGS) $(DYNACOE_LIB_PATHS)  $(USER_OBJS) -o ../$(OUTPUT_NAME)  $(LIBS)  
 
 
 # each object file

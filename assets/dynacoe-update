@@ -3,7 +3,7 @@
 # dynacoe-update: pulls the current release version of the dynacoe libraries, offline dependencies, and
 # other things you'd need to build dynacoe on your system
 
-# in install directories, all vdersion so built Dynaoce are within the root directory 
+# in install directories, all versions of Dynacoe are within the root directory 
 # "ver". If "ver" does not exist upon first updating, the first successfully
 # retrieved built library path will be used as the [default] config version
 # This is done by creating a DEFAULT file in the base DYNACOE_INSTALL_PATH directory 

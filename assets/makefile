@@ -1,5 +1,5 @@
-DYNACOE_VER         = $(shell cat "./userspace-ver/DEFAULT")
-DYNACOE_ROOT        = ./userspace-ver/$(DYNACOE_VER)/
+DYNACOE_VER         = $(shell cat "$(DYNACOE_INSTALL_PATH)/userspace/ver/DEFAULT")
+DYNACOE_ROOT        = $(DYNACOE_INSTALL_PATH)/userspace/ver/$(DYNACOE_VER)/
 DYNACOE_LIB_PATH    = $(DYNACOE_ROOT)/build/lib/
 
 # Basic makefile for Dynacoe

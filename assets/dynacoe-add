@@ -86,12 +86,9 @@ fi
 mkdir ./.dynacoe
 touch SOURCES #should always leave SOURCES alone always
 cp "$DYNACOE_INSTALL_PATH/makefile"  ./.dynacoe/
-ln -svTf "$DYNACOE_INSTALL_PATH/userspace/ver" userspace-ver > /dev/null
-if [ ! -d ./userspace-ver ]; then 
-    echo "Failed to create userspace link to Dynaoce installation!"
-    exit 4
-fi
-mv ./userspace-ver ./.dynacoe/
+
+
+echo $DYNACOE_INSTALL_PATH | tr '\\' '/' > ./.dynacoe/PATH  
 echo "$1" > ./.dynacoe/PROJECT
 echo "default" > ./.dynacoe/MODE
 

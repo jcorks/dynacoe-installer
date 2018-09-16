@@ -78,10 +78,7 @@ cd "$DYNACOE_INSTALL_PATH/userspace/temp-pack"
 #Get the installation!
 
 if [ "$offline" = "" ]; then 
-    if [ "$unstable" = "" ]; then
-        wget https://jcorks.github.io/Dynacoe/release/win/dynacoe.tar.xz
-    else 
-        wget https://jcorks.github.io/Dynacoe/dev/win/dynacoe.tar.xz
+    wget https://jcorks.github.io/Dynacoe/download/win/dynacoe.tar.xz
     fi
     if [ ! "$?" -eq "0" ]; then 
         echo "Download Dynacoe version failed... (Are you connected to the internet?)"

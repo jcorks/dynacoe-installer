@@ -7,7 +7,7 @@ Johnathan Corkery, 2016
 project 
 page. Thanks! ***
 
-If you're looking for the actual installers, go here http://coebeef.net/dynacoe
+If you're looking for the actual installers, go here http://jcorks.github.io/dynacoe/downloads.html
 
 
 The source here is for various installation suites that 

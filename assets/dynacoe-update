@@ -55,9 +55,11 @@ if [ "$1" = "--offline" ]; then
     fi
 fi
 
-if [ "$1" = "--dev" ]; then 
-    unstable="y"
-fi 
+if [ "$1" = "linux" ]; then 
+    linux="y"
+elif [ "$1" = "windows" ]; then
+    windows="y"
+fi
 
 dynacoe-verify > /dev/null
 if [ "$?" -eq "4" ] ; then 
@@ -78,8 +80,21 @@ cd "$DYNACOE_INSTALL_PATH/userspace/temp-pack"
 #Get the installation!
 
 if [ "$offline" = "" ]; then 
-    wget https://jcorks.github.io/Dynacoe/download/win/dynacoe.tar.xz
+    if [ "$windows" = "y" ]; then 
+        wget https://jcorks.github.io/Dynacoe/download/win/dynacoe.tar.xz
+    elif [ "$linux" = "y" ]; then 
+        wget https://jcorks.github.io/Dynacoe/download/linux/dynacoe.tar.xz
+    else 
+        echo "Updating requires an OS to retrieve from as the first argument."
+        echo "Try calling the program like this:"
+        echo ""
+        echo "     dynacoe-update windows"
+	echo "" 
+        echo "or:"
+	echo "     dynacoe-update linux"
+        exit 10
     fi
+    
     if [ ! "$?" -eq "0" ]; then 
         echo "Download Dynacoe version failed... (Are you connected to the internet?)"
         exit 1
